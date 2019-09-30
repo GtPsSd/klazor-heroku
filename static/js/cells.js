@@ -5,64 +5,55 @@ class Cell {
         this.selected = true
     }
 }
-
-class VideoCell extends Cell {
-    constructor(id, title, video, scale) {
+class MediaCell extends Cell{
+    constructor(id, title, url) {
         super(id)
-        if (video) {
+        if (url) {
             this.editMode = false
-            this.filename = video.substring(14)
         }
         this.title = title
-        this.video = video
+        this.url = url
+    }
+}
+class GraphicMediaCell extends  MediaCell{
+    constructor(id, title, url, scale){
+        super(id, title, url)
         this.scale = scale
     }
 }
+class VideoCell extends GraphicMediaCell {
+    constructor(id, title, url, scale){
+        super(id, title, url, scale)
+    }
+}
 
-function getVideoId(url){
+function getYoutubeVideoId(url){
+    url = url.replace('&t', '')
     let urlparts = url.split('/')
     urlparts = urlparts[urlparts.length - 1].split('=')
-    let videoId = urlparts[urlparts.length -1]
+    let videoId = urlparts.length > 1 ? urlparts[1]: urlparts[0]
     return videoId
 }
-class YoutubeCell extends Cell {
-    constructor(id, title, youtube, scale) {
-        super(id)
-        this.title = title
-        this.youtube = youtube
-        this.scale = scale
+class YoutubeCell extends GraphicMediaCell {
+    constructor(id, title, url, scale) {
+        super(id, title, url, scale)
     }
     embedUrl(){
-        let videoId = getVideoId(this.youtube)
-        this.youtube =  'https://www.youtube.com/embed/' + videoId
-        return this.youtube
+        let videoId = getYoutubeVideoId(this.url)
+        this.url =  'https://www.youtube.com/embed/' + videoId
+        return this.url
+    }
+}
+class AudioCell extends MediaCell {
+    constructor(id, title, url) {
+        super(id, title, url)
     }
 }
 
-class AudioCell extends Cell {
-    constructor(id, title, audio) {
-        super(id)
-        if (audio){
-            this.editMode = false
-            this.filename = audio.substring(14)
-        }
-        this.title = title
-        this.audio = audio
+class ImageCell extends GraphicMediaCell {
+   constructor(id, title, url, scale){
+        super(id, title, url, scale)
     }
-}
-
-class ImageCell extends Cell {
-    constructor(id, title, image, scale) {
-        super(id)
-        if (image){
-            this.editMode = false
-            this.filename = image.substring(14)
-        }
-        this.title = title
-        this.image = image
-        this.scale = scale
-    }
-
 }
 
 class MarkdownCell extends Cell {
@@ -72,4 +63,51 @@ class MarkdownCell extends Cell {
             this.editMode = false
         this.text = text
     }
+}
+
+class FileCell extends MediaCell {
+    constructor(id, title, url){
+        super(id, title, url)
+    }
+}
+class MultipleChoiceInputCell extends Cell{
+    constructor(id){
+        super(id)
+        this.propositions = []
+        this.nbPropositions = 0
+
+    }
+    addProposition(statement, truthValue){
+        this.propositions.push(new Proposition(statement, truthValue))
+    }
+    getNbChecked(){
+        let result = 0
+        for(let proposition of this.propositions)
+            if(proposition.isTrue)
+                result++
+        console.log(result)
+        return result
+    }
+}
+class Proposition{
+    constructor(statement, truthValue){
+        this.statement = statement
+        this.isTrue = truthValue
+    }
+}
+class NumericalInputCell extends Cell{
+    constructor(id, answer){
+        super(id)
+        this.answer = answer
+    }
+}
+class OpenEndedInputCell extends Cell{
+    constructor(id, answer){
+        super(id)
+        this.answer = answer
+    }
+}
+function getFilenameFromUrl(url){
+    let urlparts = url.split('/')
+    return urlparts[urlparts.length - 1]
 }

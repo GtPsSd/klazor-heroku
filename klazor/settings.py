@@ -36,10 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'klazor',
     'libr',
     'rest_framework',
     'api',
+    'corsheaders',
+    'crispy_forms'
 ]
 
 REST_FRAMEWORK = {
@@ -90,7 +93,7 @@ WSGI_APPLICATION = 'klazor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'klazor',
+        'NAME': 'klazor_heroku',
         'USER': 'wilcoln',
         'PASSWORD': '',
         'HOST': '',

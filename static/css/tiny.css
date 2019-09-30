@@ -1,24 +1,25 @@
-
-.tiny.card i.fa {
+.tiny{
+    position: relative;
+}
+.tiny.card > i.fa {
     position: absolute;
-    top: .5rem;
+    top: .4rem;
     right: .5rem;
     font-size: 2rem;
     color: rgba(18, 94, 240, .2);
 }
-
-.tiny.card .fa.fa-trash {
-    border: none;
-    background: transparent;
-    transition: all .2s;
-    position: absolute;
-    bottom: .5rem;
-    right: .5rem;
-    font-size: 2rem;
-    color: rgba(255, 0, 0, .1);
-    display: none;
+.tiny.card > i.fa.fa-graduation-cap{
+    color: rgba(91,192,222, .4)
 }
-
+.tiny.card i.fa.fa-leaf{
+    color: rgba(92,184,92, .3)
+}
+.tiny.card.course-element i.fa.fa-leaf{
+    color: rgba(91,192,222, .4)
+}
+.tiny.card i.fa.file{
+    color: #ccc;
+}
 .tiny.card .fa.fa-trash:hover {
     color: rgba(255, 0, 0, .4);
 }
@@ -30,7 +31,20 @@
     white-space: nowrap;
     text-transform: capitalize;
 }
-
+.tiny .folder-name, .tiny .sheet-title, .tiny .sheet-course-title {
+    text-overflow: ellipsis;
+    width: 97px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
+.tiny .sheet-location-title {
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-transform: capitalize;
+}
 .tiny .filename {
     white-space: nowrap;
     overflow: hidden;
@@ -46,24 +60,13 @@
     text-transform: capitalize;
 }
 
-.tiny {
+.tiny.card {
     background-color: #fdfdfd;
 }
-
-/* Context menu styling  */
-
-.rmenu{
-    z-index:1000;
-    position: absolute;
-    width: fit-content;
-    border-width: 0;
-    box-shadow: .0rem .0rem 1rem rgba(0,0,0,.2);
-    display: none;
+.tiny.card .card-body{
+    padding: 10px 15px;
 }
-.rmenu.show{
-    display: block;
-}
-.rmenu.show .list-group-item{
-    padding: 5px 5px;
-    font-size: .8rem;
+.tiny .recent-info{
+    font-size: .9rem;
+    color: grey;
 }
